@@ -12,4 +12,10 @@
 		<!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
 		<setting name="useGeneratedKeys" value="true" />
 	</settings>
+	
+	<plugins>
+		<plugin interceptor="com.ljt.o2o.dao.spilt.DynamicDateSourceInterceptor">
+			
+		</plugin>
+	</plugins>
 </configuration>

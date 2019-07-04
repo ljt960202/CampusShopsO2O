@@ -31,7 +31,7 @@ public class ShopDaoTest extends BaseTest{
 		ShopCategory shopCategory = new ShopCategory();
 		shopCategory.setShopCategoryId(1L);
 		shop.setShopCategory(shopCategory);
-		shop.setShopName("name");
+		shop.setShopName("slave+master?4");
 		shop.setShopDesc("desc");
 		shop.setShopAddr("addr");
 		shop.setPhone("110");
