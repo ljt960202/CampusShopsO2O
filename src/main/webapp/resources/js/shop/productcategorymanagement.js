@@ -50,8 +50,8 @@ $(function() {
 			contentType : 'application/json',
 			success : function(data) {
 				if (data.success) {
-					$.toast('提交成功！');
 					getList();
+					$.toast('提交成功！');
 				} else {
 					$.toast('提交失败！');
 				}

@@ -2,12 +2,13 @@ package com.ljt.o2o.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+
+import com.ljt.o2o.dto.ImgHolder;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -16,16 +17,33 @@ public class ImageUtil {
 	private static String basePath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
 	private static final SimpleDateFormat sDateFormat= new SimpleDateFormat("yyyyMMddHHmmss");
 	private static final Random r = new Random();
-	public static String generateThumbnail(InputStream thumbnailInputStream,String fileName,String targetAddr) {
+	public static String generateThumbnail(ImgHolder thumbnail,String targetAddr) {
 		String realFileName = getRandomFileName();
-		String extension = getFileExtension(fileName);
+		String extension = getFileExtension(thumbnail.getImageName());
 		makeDirPath(targetAddr);
 		String relativeAddr = targetAddr + realFileName + extension;
 		File dest = new File(PathUtil.getImgBasePath()+relativeAddr);
 		try {
-			Thumbnails.of(thumbnailInputStream)
-	        .size(400,400).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/watermark.png")), 0.5f)
+			Thumbnails.of(thumbnail.getImage())
+	        .size(200,200).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/watermark.png")), 0.5f)
 	        .outputQuality(0.8f).toFile(dest);
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return relativeAddr;
+	}
+	
+	public static String generateNormalImg(ImgHolder thumbnail,String targetAddr) {
+		String realFileName = getRandomFileName();
+		String extension = getFileExtension(thumbnail.getImageName());
+		makeDirPath(targetAddr);
+		String relativeAddr = targetAddr + realFileName + extension;
+		File dest = new File(PathUtil.getImgBasePath()+relativeAddr);
+		try {
+			Thumbnails.of(thumbnail.getImage())
+	        .size(337,640).watermark(Positions.BOTTOM_RIGHT,ImageIO.read(new File(basePath+"/watermark.png")), 0.5f)
+	        .outputQuality(0.9f).toFile(dest);
 		
 		} catch (IOException e) {
 			e.printStackTrace();

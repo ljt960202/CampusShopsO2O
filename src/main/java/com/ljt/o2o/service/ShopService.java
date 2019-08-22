@@ -1,7 +1,6 @@
 package com.ljt.o2o.service;
 
-import java.io.InputStream;
-
+import com.ljt.o2o.dto.ImgHolder;
 import com.ljt.o2o.dto.ShopExecution;
 import com.ljt.o2o.entity.Shop;
 import com.ljt.o2o.exception.ShopOperationException;
@@ -30,7 +29,7 @@ public interface ShopService {
 	 * @param fileName
 	 * @return
 	 */
-	ShopExecution modifyShop(Shop shop,InputStream shopImgInputStream,String fileName) throws ShopOperationException;
+	ShopExecution modifyShop(Shop shop,ImgHolder thumbnail) throws ShopOperationException;
 	/**
 	 * 注册店铺信息，包括对图片的处理
 	 * @param shop
@@ -38,5 +37,5 @@ public interface ShopService {
 	 * @param fileName
 	 * @return
 	 */
-	ShopExecution addShop(Shop shop,InputStream shopImgInputStream,String fileName) throws ShopOperationException;
+	ShopExecution addShop(Shop shop,ImgHolder thumbnail) throws ShopOperationException;
 }
