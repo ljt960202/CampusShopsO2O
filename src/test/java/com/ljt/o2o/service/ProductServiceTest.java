@@ -25,6 +25,7 @@ public class ProductServiceTest extends BaseTest{
 	
 	@Autowired
 	private ProductService productService;
+	
 	@Test
 	public void testAddProduct() throws FileNotFoundException {
 		Product product = new Product();
@@ -40,7 +41,7 @@ public class ProductServiceTest extends BaseTest{
 		product.setCreateTime(new Date());
 		product.setEnableStatus(ProductStateEnum.SUCCESS.getState());
 		//创建缩略图文件流
-		File thumbnailFile = new File("E:\\TortoiseGit\\java\\eclipse-workspace\\up.png");
+		File thumbnailFile = new File("E:\\TortoiseGit\\java\\eclipse-workspace//up.png");
 		InputStream is = new FileInputStream(thumbnailFile);
 		ImgHolder thumbnail = new ImgHolder(is,thumbnailFile.getName());
 		//创建两个商品详情图片文件流并将他们添加到详情图列表中
@@ -55,4 +56,34 @@ public class ProductServiceTest extends BaseTest{
 		ProductExecution productExecution = productService.addProduct(product, thumbnail, productImgList);
 		assertEquals(ProductStateEnum.SUCCESS.getState(), productExecution.getState());
 	}
+	
+	@Test
+	public void testModifyProduct() throws FileNotFoundException {
+		Product product = new Product();
+		Shop shop = new Shop();
+		shop.setShopId(12L);
+		ProductCategory pc = new ProductCategory();
+		pc.setProductCategoryId(10L);
+		product.setProductId(11L);
+		product.setShop(shop);
+		product.setProductCategory(pc);
+		product.setProductName("正式的商品");
+		product.setProductDesc("正式的商品");
+		//创建缩略图文件流
+		File thumbnailFile = new File("E:\\TortoiseGit\\java\\eclipse-workspace\\thumbnail.jpg");
+		InputStream is = new FileInputStream(thumbnailFile);
+		ImgHolder thumbnail = new ImgHolder(is,thumbnailFile.getName());
+		//创建两个商品详细图文件流并将他们添加到详情图列表中
+		File productImg1 = new File("E:\\TortoiseGit\\java\\eclipse-workspace\\1.jpg");
+		InputStream is1 = new FileInputStream(productImg1);
+		File productImg2 = new File("E:\\TortoiseGit\\java\\eclipse-workspace\\2.jpg");
+		InputStream is2 = new FileInputStream(productImg1);	
+		List<ImgHolder> productImgList = new ArrayList<ImgHolder>();
+		productImgList.add(new ImgHolder(is1,productImg1.getName()));
+		productImgList.add(new ImgHolder(is2,productImg2.getName()));
+		//添加商品并验证
+		ProductExecution pe = productService.modifyProduct(product, thumbnail, productImgList);
+		assertEquals(ProductStateEnum.SUCCESS.getState(), pe.getState());
+	}
+
 }

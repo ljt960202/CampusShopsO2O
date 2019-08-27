@@ -56,7 +56,7 @@ $(function() {
 	function getCategory() {
 		$.getJSON(categoryUrl, function(data) {
 			if (data.success) {
-				var productCategoryList = data.productCategoryList;
+				var productCategoryList = data.data;
 				var optionHtml = '';
 				productCategoryList.map(function(item, index) {
 					optionHtml += '<option data-value="'
@@ -118,6 +118,7 @@ $(function() {
 					return;
 				}
 				formData.append("verifyCodeActual", verifyCodeActual);
+				//将数据提交至后台处理相关操作
 				$.ajax({
 					url : productPostUrl,
 					type : 'POST',

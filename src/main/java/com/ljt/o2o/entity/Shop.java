@@ -104,5 +104,7 @@ public class Shop {
 	public void setOwner(PersonInfo owner) {
 		this.owner = owner;
 	}
+	
+
 		
 }

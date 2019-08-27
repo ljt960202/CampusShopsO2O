@@ -40,7 +40,7 @@ public class ProductManagementController {
 	
 	@RequestMapping(value="/addproduct",method=RequestMethod.POST)
 	@ResponseBody
-	private Map<String,Object> addProduct(HttpServletRequest request){
+	public Map<String,Object> addProduct(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String, Object>();
 		//验证码校验
 		if(!CodeUtil.checkVerifyCode(request)) {
@@ -61,10 +61,10 @@ public class ProductManagementController {
 			if(multipartResolver.isMultipart(request)) {
 				multipartRequest = (MultipartHttpServletRequest) request;
 				//取出缩略图并构建ImgHolder对象
-				CommonsMultipartFile thumbnailFile = (CommonsMultipartFile) multipartRequest;
+				CommonsMultipartFile thumbnailFile = (CommonsMultipartFile) multipartRequest.getFile("thumbnail");
 				thumbnail = new ImgHolder(thumbnailFile.getInputStream(),thumbnailFile.getOriginalFilename());
 				for(int i=0;i<IMAGEMAXCOUNT;i++) {
-					CommonsMultipartFile productImgFile = (CommonsMultipartFile) multipartRequest;
+					CommonsMultipartFile productImgFile = (CommonsMultipartFile) multipartRequest.getFile("productImg"+i);
 					if(productImgFile!=null) {
 						//获取出的第i个详细图片文件流不为空，则将其加入详情图列表
 						ImgHolder prodcuImg = new ImgHolder(productImgFile.getInputStream(),productImgFile.getOriginalFilename());
@@ -97,9 +97,7 @@ public class ProductManagementController {
 			try {
 				//从session中获取当前店铺的Id并赋值给product,减少对前端数据的依赖
 				Shop currentShop = (Shop) request.getSession().getAttribute("currentShop");
-				Shop shop = new Shop();
-				shop.setShopId(currentShop.getShopId());
-				product.setShop(shop);
+				product.setShop(currentShop);
 				//执行添加操作
 				ProductExecution pe = productService.addProduct(product, thumbnail, productImgList);
 				if(pe.getState()==ProductStateEnum.SUCCESS.getState()) {

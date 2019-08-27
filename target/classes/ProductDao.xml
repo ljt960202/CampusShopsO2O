@@ -3,15 +3,16 @@
 <mapper namespace="com.ljt.o2o.dao.ProductDao">
 
 	<resultMap type="com.ljt.o2o.entity.Product" id="productMap">
-		<id property="productId" column=""/>
-		<result property="productDesc" column=""/>
-		<result property="imgAddr" column=""/>
-		<result property="normalPrice" column=""/>
-		<result property="promotionPrice" column=""/>
-		<result property="priority" column=""/>
-		<result property="createTime" column=""/>
-		<result property="lastEditTime" column=""/>
-		<result property="enableStatus" column=""/>
+		<id property="productId" column="product_id"/>
+		<result column="product_name" property="productName" />
+		<result property="productDesc" column="product_desc"/>
+		<result property="imgAddr" column="img_addr"/>
+		<result property="normalPrice" column="normal_price"/>
+		<result property="promotionPrice" column="promotion_price"/>
+		<result property="priority" column="priority"/>
+		<result property="createTime" column="create_time"/>
+		<result property="lastEditTime" column="last_edit_time"/>
+		<result property="enableStatus" column="enable_status"/>
 		<!-- 一对一使用association product中的属性为productCategory， 通过数据库中的product_category_id关联起来的 
 			类型为 com.tyron.o2o.entity.ProductCategory -->
 		<association property="productCategory" column="product_category_id" javaType="com.ljt.o2o.entity.ProductCategory">
@@ -104,4 +105,47 @@
 		</where>
 	</select>
 
+	<select id="queryProductById" resultMap="productMap" parameterType="long">
+		SELECT
+		p.product_id,
+		p.product_name,
+		p.product_desc,
+		p.img_addr,
+		p.normal_price,
+		p.promotion_price,
+		p.priority,
+		p.create_time,
+		p.last_edit_time,
+		p.enable_status,
+		p.product_category_id,
+		p.shop_id,
+		pm.product_img_id,
+		pm.img_addr as detail_img,
+		pm.img_desc,
+		pm.priority,
+		pm.create_time
+		FROM
+		tb_product p
+		left join tb_product_img pm on p.product_id=pm.product_id
+		where p.product_id = #{productId}
+		order by pm.priority desc
+	</select>
+	<update id="updateProduct" parameterType="com.ljt.o2o.entity.Product" keyProperty="product_id" useGeneratedKeys="true">
+		UPDATE tb_product
+		<set>
+			<if test="productName!=null">product_name=#{productName},</if>
+			<if test="productDesc!=null">product_desc=#{productDesc},</if>
+			<if test="imgAddr!=null">img_addr=#{imgAddr},</if>
+			<if test="normalPrice!=null">normal_price=#{normalPrice},</if>
+			<if test="promotionPrice!=null">promotion_price=#{promotionPrice},</if>
+			<if test="priority!=null">priority=#{priority},</if>
+			<if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
+			<if test="enableStatus!=null">enable_status#{enableStatus},</if>
+			<if test="productCategory!=null and productCategory.productCategoryId!=null">
+				product_category_id=#{productCategory.productCategoryId},
+			</if>
+		</set>
+		WHERE product_id = #{productId}
+		AND shop_id=#{shop.shopId}
+	</update>
 </mapper>

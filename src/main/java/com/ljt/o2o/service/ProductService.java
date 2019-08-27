@@ -19,4 +19,22 @@ public interface ProductService {
 	 */
 	ProductExecution addProduct(Product product,ImgHolder thumbnail, 
 			List<ImgHolder> productImgs)throws ProductOperationException;
+	
+	/**
+	 * 通过商品ID查询唯一的商品信息
+	 * @param productId
+	 * @return
+	 */
+	Product getProductById(long productId);
+	
+	/**
+	 * 修改商品信息以及图片处理
+	 * @param product
+	 * @param thumbnail
+	 * @param productImgs
+	 * @return
+	 * @throws ProductOperationException
+	 */
+	ProductExecution modifyProduct(Product product,ImgHolder thumbnail, 
+			List<ImgHolder> productImgs)throws ProductOperationException;
 }
