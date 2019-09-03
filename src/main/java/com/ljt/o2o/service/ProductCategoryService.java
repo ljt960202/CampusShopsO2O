@@ -33,4 +33,5 @@ public interface ProductCategoryService {
 	 */
 	ProductCategoryExecution deleteProductCategory(long productCategoryId,long shopId)
 			throws ProductCategoryOperationException;
+	
 }

@@ -18,6 +18,7 @@ import com.ljt.o2o.enums.ProductStateEnum;
 import com.ljt.o2o.exception.ProductOperationException;
 import com.ljt.o2o.service.ProductService;
 import com.ljt.o2o.util.ImageUtil;
+import com.ljt.o2o.util.PageCalculator;
 import com.ljt.o2o.util.PathUtil;
 
 @Service
@@ -161,6 +162,19 @@ public class ProductServiceImpl implements ProductService {
 		}
 		//刪除数据库里原有图片的信息
 		productImgDao.deleteProductImgByProductId(productId);
+	}
+
+	@Override
+	public ProductExecution getProductList(Product productCondition, int pageIndex, int pageSize) {
+		//页码转换成数据库的行码，并调用dao层取回指定页码的商品列表
+		int rowIndex = PageCalculator.calculatorRowIndex(pageIndex, pageSize);
+		List<Product> productList = productDao.queryProductList(productCondition, rowIndex, pageSize);
+		//基本同样的查询条件返回该查询条件下的商品总数
+		int count = productDao.queryProductCount(productCondition);
+		ProductExecution pe = new ProductExecution();
+		pe.setProductList(productList);
+		pe.setCount(count);
+		return pe;
 	}
 
 }

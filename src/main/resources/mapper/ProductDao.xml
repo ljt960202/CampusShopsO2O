@@ -140,12 +140,19 @@
 			<if test="promotionPrice!=null">promotion_price=#{promotionPrice},</if>
 			<if test="priority!=null">priority=#{priority},</if>
 			<if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
-			<if test="enableStatus!=null">enable_status#{enableStatus},</if>
+			<if test="enableStatus!=null">enable_status=#{enableStatus},</if>
 			<if test="productCategory!=null and productCategory.productCategoryId!=null">
 				product_category_id=#{productCategory.productCategoryId},
 			</if>
 		</set>
 		WHERE product_id = #{productId}
 		AND shop_id=#{shop.shopId}
+	</update>
+	
+	<update id="updateProductCategoryToNull" parameterType="Long">
+		update tb_product
+		set 
+		product_category_id = null
+		where product_category_id = #{productCategoryId}
 	</update>
 </mapper>
