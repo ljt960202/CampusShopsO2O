@@ -2,7 +2,7 @@ package com.ljt.o2o.util;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class HttpservletRequestUtil {
+public class HttpServletRequestUtil {
 	public static int getInt(HttpServletRequest request, String key) {
 		try {
 			return Integer.decode(request.getParameter(key));

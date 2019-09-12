@@ -29,7 +29,7 @@ import com.ljt.o2o.exception.ProductOperationException;
 import com.ljt.o2o.service.ProductCategoryService;
 import com.ljt.o2o.service.ProductService;
 import com.ljt.o2o.util.CodeUtil;
-import com.ljt.o2o.util.HttpservletRequestUtil;
+import com.ljt.o2o.util.HttpServletRequestUtil;
 
 @Controller
 @RequestMapping("/shopadmin")
@@ -58,7 +58,7 @@ public class ProductManagementController {
 		//接收前端参数的变量的初始化，包括商品，缩略图，详情图列表实体类
 		ObjectMapper mapper = new ObjectMapper();
 		Product product = null;
-		String productStr = HttpservletRequestUtil.getString(request, "productStr");
+		String productStr = HttpServletRequestUtil.getString(request, "productStr");
 		ImgHolder thumbnail = null;
 		List<ImgHolder> productImgList = new ArrayList<ImgHolder>();
 		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
@@ -135,7 +135,7 @@ public class ProductManagementController {
 		Map<String,Object> modelMap = new HashMap<String,Object>();
 		//是商品编辑时候调用还是上下架操作的时候调用
 		//若为前者则进行验证码判断，后者则跳过验证码判断
-		Boolean statusChange = HttpservletRequestUtil.getBoolean(request, "statusChange");
+		Boolean statusChange = HttpServletRequestUtil.getBoolean(request, "statusChange");
 		//验证码判断
 		if(!statusChange&&!CodeUtil.checkVerifyCode(request)) {
 			modelMap.put("success", false);
@@ -159,7 +159,7 @@ public class ProductManagementController {
 			return modelMap;
 		}
 		try {
-			String productStr = HttpservletRequestUtil.getString(request, "productStr");
+			String productStr = HttpServletRequestUtil.getString(request, "productStr");
 			//尝试获取前端传过来的表单string流并将其转换成Product实体类
 			product = mapper.readValue(productStr, Product.class);
 		}catch (Exception e) {
@@ -212,16 +212,16 @@ public class ProductManagementController {
 	@ResponseBody
 	private Map<String,Object> getProductListByShop(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
-		int pageIndex = HttpservletRequestUtil.getInt(request, "pageIndex");
-		int pageSize = HttpservletRequestUtil.getInt(request, "pageSize");
+		int pageIndex = HttpServletRequestUtil.getInt(request, "pageIndex");
+		int pageSize = HttpServletRequestUtil.getInt(request, "pageSize");
 		//从当前session中获取店铺信息，主要是获取shopId
 		Shop currentShop = (Shop)request.getSession().getAttribute("currentShop");
 		//空值判断
 		if((pageIndex>-1)&&(pageSize>-1)&&(currentShop!=null)&&(currentShop.getShopId()!=null)) {
 			//获取传入的
-			long productCategoryId = HttpservletRequestUtil.getLong(request,
+			long productCategoryId = HttpServletRequestUtil.getLong(request,
 					"productCategoryId");
-			String productName = HttpservletRequestUtil.getString(request,
+			String productName = HttpServletRequestUtil.getString(request,
 					"productName");
 			Product productCondition = compactProductCondition4Search(
 					currentShop.getShopId(), productCategoryId, productName);

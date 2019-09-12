@@ -6,5 +6,10 @@ import com.ljt.o2o.entity.ShopCategory;
 
 
 public interface ShopCategoryService {
-	List<ShopCategory> getShopCategoryList(ShopCategory shopCategory);
+	/**
+	 * 根据条件获取shopCategory列表
+	 * @param shopCategoryCondition
+	 * @return
+	 */
+	List<ShopCategory> getShopCategoryList(ShopCategory shopCategoryCondition);
 }

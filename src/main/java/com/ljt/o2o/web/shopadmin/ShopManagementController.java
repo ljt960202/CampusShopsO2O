@@ -29,7 +29,7 @@ import com.ljt.o2o.service.AreaService;
 import com.ljt.o2o.service.ShopCategoryService;
 import com.ljt.o2o.service.ShopService;
 import com.ljt.o2o.util.CodeUtil;
-import com.ljt.o2o.util.HttpservletRequestUtil;
+import com.ljt.o2o.util.HttpServletRequestUtil;
 
 @Controller
 @RequestMapping("/shopadmin")
@@ -47,7 +47,7 @@ public class ShopManagementController {
 	@ResponseBody
 	private Map<String,Object> getShopManagementInfo(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
-		Long shopId = HttpservletRequestUtil.getLong(request, "shopId");
+		Long shopId = HttpServletRequestUtil.getLong(request, "shopId");
 		if(shopId<=0) {
 			Object currentShopObj = request.getSession().getAttribute("currentShop");
 			if(currentShopObj==null) {
@@ -94,7 +94,7 @@ public class ShopManagementController {
 	@ResponseBody
 	private Map<String,Object> getByShopId(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
-		Long shopId = HttpservletRequestUtil.getLong(request, "shopId");
+		Long shopId = HttpServletRequestUtil.getLong(request, "shopId");
 		if(shopId>-1) {
 			try {
 				Shop shop = shopService.getByShopId(shopId);
@@ -142,7 +142,7 @@ public class ShopManagementController {
 			return modelMap;
 		}
 		//1.接收并转化相应的参数，包括店铺信息以及图片信息
-		String shopStr = HttpservletRequestUtil.getString(request, "shopStr");
+		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
 		ObjectMapper mapper = new ObjectMapper();
 		Shop shop = null;
 		try {
@@ -207,7 +207,7 @@ public class ShopManagementController {
 			return modelMap;
 		}
 		//1.接收并转化相应的参数，包括店铺信息以及图片信息
-		String shopStr = HttpservletRequestUtil.getString(request, "shopStr");
+		String shopStr = HttpServletRequestUtil.getString(request, "shopStr");
 		ObjectMapper mapper = new ObjectMapper();
 		Shop shop = null;
 		try {
