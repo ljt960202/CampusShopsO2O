@@ -1,3 +1,4 @@
+var productPostUrl;
 $(function() {
 	// 从URL里获取productId参数的值
 	var productId = getQueryString('productId');
@@ -7,7 +8,7 @@ $(function() {
 	// 获取当前店铺设定的商品类别列表的URL
 	var categoryUrl = '/o2o/shopadmin/getproductcategorylist';
 	// 更新商品信息的URL
-	var productPostUrl = '/o2o/shopadmin/modifyproduct';
+	productPostUrl = '/o2o/shopadmin/modifyproduct';
 	// 由于商品添加和编辑使用的是同一个页面,
 	// 改标识符用来标明本次是添加还是编辑操作
 	var isEdit = false;

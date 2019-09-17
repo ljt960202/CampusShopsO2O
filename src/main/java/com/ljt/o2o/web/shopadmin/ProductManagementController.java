@@ -193,6 +193,9 @@ public class ProductManagementController {
 		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
 		//取出缩略图并构建ImgHolder对象
 		CommonsMultipartFile thumbnailFile = (CommonsMultipartFile) multipartRequest.getFile("thumbnail");
+		if(thumbnailFile==null) {
+			return null;
+		}
 		thumbnail = new ImgHolder(thumbnailFile.getInputStream(),thumbnailFile.getOriginalFilename());
 		for(int i=0;i<IMAGEMAXCOUNT;i++) {
 			CommonsMultipartFile productImgFile = (CommonsMultipartFile) multipartRequest.getFile("productImg"+i);

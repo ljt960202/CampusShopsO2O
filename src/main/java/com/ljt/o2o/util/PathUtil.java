@@ -8,7 +8,7 @@ public class PathUtil {
 		if(os.toLowerCase().startsWith("win")) {
 			basePath = "E:/TortoiseGit/java/eclipse-workspace";
 		}else {
-			basePath = "/home/lijintao/image/";
+			basePath = "/home/lijintao/image";
 		}
 		basePath = basePath.replace("/", separator);
 		return basePath;
