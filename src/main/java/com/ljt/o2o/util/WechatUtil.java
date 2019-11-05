@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ljt.o2o.dto.UserAccessToken;
 import com.ljt.o2o.dto.WechatUser;
+import com.ljt.o2o.entity.PersonInfo;
 /**
  * 微信工具类
  * 
@@ -170,4 +171,20 @@ public class WechatUtil {
         }
         return buffer.toString();
     }
+    
+    /**
+     * 将WechatUser里的信息转换成PersonInfo的信息并返回PersonInfo
+     * @param user
+     * @return
+     */
+    public static PersonInfo getPersonInfoFromRequest(WechatUser user) {
+    	PersonInfo personInfo = new PersonInfo();
+    	personInfo.setName(user.getNickName());
+    	personInfo.setGender(user.getSex()+"");
+    	personInfo.setProfileImg(user.getHeadimgurl());
+    	personInfo.setEnableStatus(1);
+    	return personInfo;
+    }
+    
+    
 }
