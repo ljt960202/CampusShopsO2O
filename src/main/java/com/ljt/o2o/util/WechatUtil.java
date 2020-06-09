@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.URL;
+import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
@@ -22,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ljt.o2o.dto.UserAccessToken;
 import com.ljt.o2o.dto.WechatUser;
 import com.ljt.o2o.entity.PersonInfo;
+
 /**
  * 微信工具类
  * 
@@ -51,6 +53,7 @@ public class WechatUtil {
                 + "&code=" + code + "&grant_type=authorization_code";
         // 向相应URL发送请求获取token json字符串
         String tokenStr = httpsRequest(url, "GET", null);
+        //String tokenStr = get(url);
         log.debug("userAccessToken:" + tokenStr);
         UserAccessToken token = new UserAccessToken();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -87,6 +90,7 @@ public class WechatUtil {
                 + "&lang=zh_CN";
         // 访问该URL获取用户信息json 字符串
         String userStr = httpsRequest(url, "GET", null);
+        //String userStr = get(url);
         log.debug("user info :" + userStr);
         WechatUser user = new WechatUser();
         ObjectMapper objectMapper = new ObjectMapper();
@@ -165,9 +169,9 @@ public class WechatUtil {
             httpUrlConn.disconnect();
             log.debug("https buffer:" + buffer.toString());
         } catch (ConnectException ce) {
-            log.error("Weixin server connection timed out.");
+            log.error("Weixin server connection timed out."+ce.getMessage());
         } catch (Exception e) {
-            log.error("https request error:{}", e);
+            log.error("https request error:{}", e.getMessage());
         }
         return buffer.toString();
     }
@@ -186,5 +190,31 @@ public class WechatUtil {
     	return personInfo;
     }
     
-    
+    /**
+	 * 向指定的地址发送get请求
+	 * 
+	 * @param url
+	 * @return 
+	 */
+	public static String get(String url) {
+		try {
+			log.debug("get "+url);
+			URL urlObj = new URL(url);
+			// 开连接
+			URLConnection connection = urlObj.openConnection();
+			InputStream is = connection.getInputStream();
+			byte[] b = new byte[1024];
+			int len;
+			StringBuilder sb = new StringBuilder();
+			while ((len = is.read(b)) != -1) {
+				sb.append(new String(b, 0, len,"UTF-8"));
+			}
+			log.debug("get "+sb.toString());
+			return sb.toString();
+		} catch (Exception e) {
+			log.error("get "+e.getMessage());
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

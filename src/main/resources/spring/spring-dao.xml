@@ -6,13 +6,21 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- 1.配置数据库相关参数properties的属性：${url} -->
-	<context:property-placeholder location="classpath:jdbc.properties"/>
-	
+	<bean class="com.ljt.o2o.util.EncryptPropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:jdbc.properties</value>
+				<value>classpath:redis.properties</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="UTF-8" />
+	</bean>
 	<!-- 2.数据库连接池 -->
 	<bean id="abstractDataSource" abstract="true" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 	destroy-method="close">
+		<property name="initialPoolSize" value="6"/>
 		<!-- c3p0连接池的私有属性 -->
-		<property name="maxPoolSize" value="30" />
+		<property name="maxPoolSize" value="300" />
 		<property name="minPoolSize" value="10" />
 		<!-- 关闭连接后不自动commit -->
 		<property name="autoCommitOnClose" value="false" />
@@ -20,6 +28,9 @@
 		<property name="checkoutTimeout" value="10000" />
 		<!-- 当获取连接失败重试次数 -->
 		<property name="acquireRetryAttempts" value="2" />
+		<property name="maxStatements" value="0"/>
+		<property name="unreturnedConnectionTimeout" value="25"/>
+   		<property name="idleConnectionTestPeriod" value="1800" />
 	</bean>
 	<bean id ="master" parent="abstractDataSource">
 		<!-- 配置连接池属性 -->

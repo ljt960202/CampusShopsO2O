@@ -14,10 +14,16 @@ public class AreaDaoTest extends BaseTest{
 
 	@Autowired
 	private AreaDao areaDao;
-	
+
+//	@Autowired
+//	public LocalAuthController lac;
+//	@Autowired
+//	public LocalAuthController lac2;
 	@Test
 	public void testQueryDao() {
 		List<Area> list = areaDao.queryArea();
+//		System.out.println(lac);
+//		System.out.println(lac2);
 		assertEquals(4, list.size());
 	}
 }

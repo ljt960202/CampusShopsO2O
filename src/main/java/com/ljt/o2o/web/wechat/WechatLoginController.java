@@ -27,7 +27,7 @@ import com.ljt.o2o.util.WechatUtil;
 /**
  * 获取关注公众号之后的微信用户信息的接口，如果在微信浏览器里访问
  * appid=wxbcaca1a08d5fd111
- * https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbcaca1a08d5fd111&redirect_uri=http://leejt.xyz/o2o/wechatlogin/logincheck&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
+ * https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbcaca1a08d5fd111&redirect_uri=http://www.leejt.xyz/o2o/wechatlogin/logincheck&role_type=1&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect
  * 则这里将会获取到code,之后再可以通过code获取到access_token 进而获取到用户信息
  * 
  * @author Lee
@@ -97,11 +97,14 @@ public class WechatLoginController {
         		personInfo = personInfoService.getPersonInfoById(auth.getPersonInfo().getUserId());
         		request.getSession().setAttribute("user", personInfo);
         	}
+        }else {
+        	request.getSession().setAttribute("user", auth.getPersonInfo());
         }
+        
         if(FRONTEND.equals(roleType)) {
         	return "frontend/index";
         }else {
-        	return "shopadmin/shoplist";
+        	return "shop/shoplist";
         }
 //        if (user != null) {
 //            // 获取到微信验证的信息后返回到指定的路由（需要自己设定）

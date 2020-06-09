@@ -11,6 +11,8 @@ public class Product {
 	private String normalPrice;
 	private String promotionPrice;
 	private Integer priority;
+	//商品积分
+	private Integer point;
 	private Date createTime;
 	private Date lastEditTime;
 	//0.下架 1.在前端展示系统展示
@@ -96,6 +98,12 @@ public class Product {
 	}
 	public void setShop(Shop shop) {
 		this.shop = shop;
+	}
+	public Integer getPoint() {
+		return point;
+	}
+	public void setPoint(Integer point) {
+		this.point = point;
 	}
 	
 	

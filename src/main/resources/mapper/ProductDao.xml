@@ -13,6 +13,7 @@
 		<result property="createTime" column="create_time"/>
 		<result property="lastEditTime" column="last_edit_time"/>
 		<result property="enableStatus" column="enable_status"/>
+		<result property="point" column="point"/>
 		<!-- 一对一使用association product中的属性为productCategory， 通过数据库中的product_category_id关联起来的 
 			类型为 com.tyron.o2o.entity.ProductCategory -->
 		<association property="productCategory" column="product_category_id" javaType="com.ljt.o2o.entity.ProductCategory">
@@ -47,6 +48,7 @@
 		create_time,
 		last_edit_time,
 		enable_status,
+		point,
 		product_category_id,
 		shop_id
 		FROM
@@ -76,12 +78,12 @@
 	useGeneratedKeys="true" keyProperty="productId" keyColumn="product_id" >
 		insert into tb_product
 		(product_name,product_desc,img_addr,normal_price,promotion_price,
-		priority,create_time,last_edit_time,enable_status,product_category_id,
+		priority,create_time,last_edit_time,enable_status,point,product_category_id,
 		shop_id)
 		values
 		(#{productName},#{productDesc},#{imgAddr},
 		#{normalPrice},#{promotionPrice},#{priority},#{createTime},
-		#{lastEditTime},#{enableStatus},#{productCategory.productCategoryId},
+		#{lastEditTime},#{enableStatus},#{point},#{productCategory.productCategoryId},
 		#{shop.shopId})
 	</insert>
 	
@@ -117,6 +119,7 @@
 		p.create_time,
 		p.last_edit_time,
 		p.enable_status,
+		p.point,
 		p.product_category_id,
 		p.shop_id,
 		pm.product_img_id,
@@ -141,6 +144,7 @@
 			<if test="priority!=null">priority=#{priority},</if>
 			<if test="lastEditTime!=null">last_edit_time=#{lastEditTime},</if>
 			<if test="enableStatus!=null">enable_status=#{enableStatus},</if>
+			<if test="point!=null">point=#{point},</if>
 			<if test="productCategory!=null and productCategory.productCategoryId!=null">
 				product_category_id=#{productCategory.productCategoryId},
 			</if>

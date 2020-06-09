@@ -72,9 +72,10 @@ public class ShopManagementController {
 	private Map<String,Object> getShopList(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
 		PersonInfo user = new PersonInfo();
-		user.setUserId(1L);
-		user.setName("test");
-		request.getSession().setAttribute("user", user);
+		//
+//		user.setUserId(13L);
+//		user.setName("Duplicator");
+//		request.getSession().setAttribute("user", user);
 		user = (PersonInfo)request.getSession().getAttribute("user");
 		try {
 			Shop shopCondition = new Shop();
@@ -134,6 +135,7 @@ public class ShopManagementController {
 	}
 	
 	@RequestMapping(value = "/registershop",method = RequestMethod.POST)
+	@ResponseBody
 	private Map<String,Object> registerShop(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
 		if(!CodeUtil.checkVerifyCode(request)) {
@@ -199,6 +201,7 @@ public class ShopManagementController {
 	
 	
 	@RequestMapping(value = "/modifyshop",method = RequestMethod.POST)
+	@ResponseBody
 	private Map<String,Object> modifyShop(HttpServletRequest request){
 		Map<String,Object> modelMap = new HashMap<String,Object>();
 		if(!CodeUtil.checkVerifyCode(request)) {
